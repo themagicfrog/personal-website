@@ -1,0 +1,30 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.content {
+  text-align: center;
+}
+
+.title {
+  font-size: 5.75rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.projectsLink {
+  color: #1f2937;
+  text-decoration: none;
+  font-size: 3.25rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.projectsLink:hover {
+  text-decoration: underline;
+} 
