@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Project } from '@/types/project';
 
 export default function Projects() {
@@ -14,6 +15,7 @@ export default function Projects() {
     const fetchProjects = async () => {
       try {
         const response = await fetch('/api/projects');
+        
         if (!response.ok) {
           throw new Error('Failed to fetch projects');
         }
@@ -142,11 +144,15 @@ function ImageCarousel({ images }: { images: string[] }) {
         setCurrentImageIndex(0); 
       }}
     >
-      <img
+      <Image
         src={validImages[currentImageIndex]}
         alt={`Project image ${currentImageIndex + 1}`}
         className={styles.carouselImage}
         onError={() => handleImageError(currentImageIndex)}
+        width={400}
+        height={250}
+        style={{ objectFit: 'cover' }}
+        unoptimized
       />
       {validImages.length > 1 && isHovering && (
         <div className={styles.carouselDots}>
