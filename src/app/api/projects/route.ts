@@ -1,10 +1,6 @@
 import { NextResponse } from 'next/server';
 import Airtable from 'airtable';
 
-const base = new Airtable({
-  apiKey: process.env.AIRTABLE_API_KEY
-}).base(process.env.AIRTABLE_BASE_ID || '');
-
 interface AirtableAttachment {
   url: string;
   filename?: string;
@@ -13,13 +9,25 @@ interface AirtableAttachment {
 }
 
 export async function GET() {
+  if (!process.env.AIRTABLE_API_KEY || !process.env.AIRTABLE_BASE_ID) {
+    console.error('Missing Airtable environment variables');
+    return NextResponse.json(
+      { error: 'Airtable configuration not found' }, 
+      { status: 500 }
+    );
+  }
+
   try {
+    const base = new Airtable({
+      apiKey: process.env.AIRTABLE_API_KEY
+    }).base(process.env.AIRTABLE_BASE_ID);
+
     const records = await base('Projects').select({
       view: 'Grid view'
     }).all();
 
     const projects = records.map(record => {
-
+      // Handle Airtable image attachments
       const imagesField = record.get('Images');
       let images: string[] = [];
       
@@ -39,7 +47,6 @@ export async function GET() {
 
     const response = NextResponse.json(projects);
     
-    // Add caching headers for faster subsequent loads
     response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
     
     return response;
