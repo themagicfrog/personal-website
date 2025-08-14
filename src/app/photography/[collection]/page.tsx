@@ -106,15 +106,9 @@ export default function CollectionPage() {
                   </div>
                 )}
               </div>
-              <div className={styles.descriptionOverlay}>
-                <div className={styles.overlayContent}>
-                  <div className={styles.descriptionSection}>
-                    <p className={styles.description}>{photo.title || 'no title'}</p>
-                  </div>
-                  <div className={styles.dateSection}>
-                    <span className={styles.date}>{photo.date || 'no date'}</span>
-                  </div>
-                </div>
+              <div className={styles.polaroidInfo}>
+                <p className={styles.polaroidTitle}>{photo.title || 'no title'}</p>
+                <p className={styles.polaroidDate}>{photo.date || 'no date'}</p>
               </div>
             </div>
           ))
