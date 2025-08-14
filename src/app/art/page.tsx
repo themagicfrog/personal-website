@@ -10,6 +10,7 @@ export default function Art() {
   const [artPieces, setArtPieces] = useState<ArtPiece[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [cardSizes, setCardSizes] = useState<Record<string, { wide: boolean; tall: boolean }>>({});
 
   useEffect(() => {
     const fetchArt = async () => {
@@ -72,7 +73,10 @@ export default function Art() {
       <div className={styles.artGrid}>
         {artPieces && artPieces.length > 0 ? (
           artPieces.map((artPiece) => (
-            <div key={artPiece.id} className={styles.artCard}>
+            <div 
+              key={artPiece.id} 
+              className={styles.artCard}
+            >
               <div className={styles.imageContainer}>
                 {artPiece.image ? (
                   <Image
@@ -86,22 +90,22 @@ export default function Art() {
                   />
                 ) : (
                   <div className={styles.noImage}>
-                    <p>No image available</p>
+                    <p>no image available</p>
                   </div>
                 )}
               </div>
               <div className={styles.descriptionOverlay}>
                 <div className={styles.overlayContent}>
-                  <div className={styles.dateSection}>
-                    <span className={styles.date}>{artPiece.date || 'No date'}</span>
+                <div className={styles.descriptionSection}>
+                    <p className={styles.description}>{artPiece.description || 'no description'}</p>
                   </div>
-                  <div className={styles.descriptionSection}>
-                    <p className={styles.description}>{artPiece.description || 'No description'}</p>
+                  <div className={styles.dateSection}>
+                    <span className={styles.date}>{artPiece.date || 'no date'}</span>
                   </div>
                 </div>
-              </div>
-            </div>
-          ))
+                             </div>
+             </div>
+           ))
         ) : (
           <div className={styles.noArt}>
             <p>no art found</p>

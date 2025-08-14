@@ -36,7 +36,7 @@
   color: #ef4444;
 }
 
-.artGrid {
+.collectionsGrid {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
@@ -46,7 +46,7 @@
   justify-content: center;
 }
 
-.artCard {
+.collectionCard {
   position: relative;
   background: #ffffff;
   padding: 1rem;
@@ -57,9 +57,11 @@
   width: 400px;
   height: 500px;
   flex-shrink: 0;
+  text-decoration: none;
+  color: inherit;
 }
 
-.artCard:hover {
+.collectionCard:hover {
   transform: translateY(-4px);
 }
 
@@ -76,15 +78,19 @@
   min-height: 0;
 }
 
-.artImage {
-  width: 100% !important;
-  height: 100% !important;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  transition: all 0.3s ease;
-  display: block;
-  margin: 0 auto;
+.imageCarousel {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.carouselImage {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .noImage {
@@ -100,59 +106,26 @@
   margin: 0 auto;
 }
 
-.descriptionOverlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 1rem;
-  transform: translateY(100%);
-  transition: transform 0.3s ease;
-  max-height: 200px;
-  overflow-y: auto;
+.collectionInfo {
+  text-align: center;
+  margin-top: 1rem;
 }
 
-.artCard:hover .descriptionOverlay {
-  transform: translateY(0);
+.collectionTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
 }
 
-.artCard:hover .imageContainer {
-  margin-bottom: 0;
-}
-
-.overlayContent {
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start;
-}
-
-.dateSection {
-  flex-shrink: 0;
-  min-width: 80px;
-}
-
-.date {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #fbbf24;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.descriptionSection {
-  flex: 1;
-}
-
-.description {
+.photoCount {
+  font-size: 1rem;
+  color: #6b7280;
   margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  color: white;
+  font-weight: 500;
 }
 
-.noArt {
+.noCollections {
   grid-column: 1 / -1;
   text-align: center;
   padding: 3rem;
@@ -166,11 +139,11 @@
     padding: 1rem;
   }
   
-  .artGrid {
+  .collectionsGrid {
     gap: 1.5rem;
   }
   
-  .artCard {
+  .collectionCard {
     width: 100%;
     max-width: 400px;
   }
@@ -179,19 +152,5 @@
     font-size: 2.5rem;
   }
   
-  .artImage {
-    max-height: 300px;
-  }
-  
-  .descriptionOverlay {
-    position: static;
-    transform: none;
-    background: rgba(0, 0, 0, 0.9);
-    margin-top: 0.5rem;
-    border-radius: 8px;
-  }
-  
-  .artCard:hover .descriptionOverlay {
-    transform: none;
-  }
-} 
+
+}

@@ -41,7 +41,8 @@ export async function GET() {
         oneLiner: record.get('One-Liner') as string,
         description: record.get('Description') as string,
         images: images,
-        link: record.get('Link') as string
+        link: record.get('Link') as string,
+        date: record.get('Date') as string
       };
     });
 

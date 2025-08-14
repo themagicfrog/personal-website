@@ -72,8 +72,17 @@ export default function Projects() {
       <div className={styles.projectsGrid}>
         {projects.map((project) => (
           <div key={project.id} className={styles.projectCard}>
-            <h2 className={styles.projectName}>{project.name}</h2>
-            <p className={styles.oneLiner}>{project.oneLiner}</p>
+            <div className={styles.projectHeader}>
+              <div className={styles.projectInfo}>
+                <h2 className={styles.projectName}>{project.name}</h2>
+                <p className={styles.oneLiner}>{project.oneLiner}</p>
+              </div>
+              {project.date && (
+                <div className={styles.dateContainer}>
+                  <span className={styles.date}>{project.date}</span>
+                </div>
+              )}
+            </div>
             
             {project.images && project.images.length > 0 ? (
               <div className={styles.imageContainer}>

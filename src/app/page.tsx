@@ -14,6 +14,9 @@ export default function Home() {
         <Link href="/art" className={styles.projectsLink}>
           art
         </Link>
+        <Link href="/photography" className={styles.projectsLink}>
+          photography
+        </Link>
         <Link href="/coding" className={styles.projectsLink}>
           coding
         </Link>
