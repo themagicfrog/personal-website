@@ -6,15 +6,6 @@ import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
 useGLTF.preload('/cat.glb');
-interface GLTFResult {
-  scene: THREE.Group;
-  scenes: THREE.Group[];
-  animations: THREE.AnimationClip[];
-  cameras: THREE.Camera[];
-  asset: any;
-  parser: any;
-  userData: any;
-}
 
 function Model({ url, mousePosition }: { url: string; mousePosition: { x: number; y: number } }) {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -22,7 +13,7 @@ function Model({ url, mousePosition }: { url: string; mousePosition: { x: number
   const [isPulsing, setIsPulsing] = useState(false);
   const originalScaleRef = useRef<number>(1);
   
-  const gltf = useGLTF(url) as GLTFResult;
+  const gltf = useGLTF(url);
   const scene = gltf?.scene || null;
   
   useEffect(() => {
