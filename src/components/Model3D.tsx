@@ -12,32 +12,37 @@ function Model({ url, mousePosition }: { url: string; mousePosition: { x: number
   const [isDragging, setIsDragging] = useState(false);
   const [isPulsing, setIsPulsing] = useState(false);
   const originalScaleRef = useRef<number>(1);
-  const [error, setError] = useState<string | null>(null);
   
+  let gltf: any;
   let scene: THREE.Group | null = null;
+  
   try {
-    const gltf = useGLTF(url);
+    gltf = useGLTF(url);
     scene = gltf.scene;
-  } catch {
-    setError('Failed to load 3D model');
+  } catch (error) {
+    console.error('Failed to load GLTF:', error);
   }
   
   useEffect(() => {
     if (scene) {
-      const box = new THREE.Box3().setFromObject(scene);
-      const center = box.getCenter(new THREE.Vector3());
-      const size = box.getSize(new THREE.Vector3());
-      const scale = 0.015 / Math.max(size.x, size.y, size.z);
-      
-      scene.position.sub(center);
-      scene.position.y -= 5.75;
-      scene.scale.setScalar(scale);
-      scene.rotation.x = Math.PI;
-      
-      originalScaleRef.current = scale;
-      setIsPulsing(false);
+      try {
+        const box = new THREE.Box3().setFromObject(scene);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
+        const scale = 0.015 / Math.max(size.x, size.y, size.z);
+        
+        scene.position.sub(center);
+        scene.position.y -= 5.75;
+        scene.scale.setScalar(scale);
+        scene.rotation.x = Math.PI;
+        
+        originalScaleRef.current = scale;
+        setIsPulsing(false);
+      } catch (error) {
+        console.error('Failed to setup model:', error);
+      }
     }
-  }, [scene, url]);
+  }, [scene]);
   
   useFrame((state) => {
     if (meshRef.current && !isDragging) {
@@ -52,19 +57,8 @@ function Model({ url, mousePosition }: { url: string; mousePosition: { x: number
     }
   });
 
-  if (error || !scene) {
-    return (
-      <div style={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center', 
-        height: '100%',
-        color: '#666',
-        fontSize: '1rem'
-      }}>
-        {error || 'Loading 3D model...'}
-      </div>
-    );
+  if (!scene) {
+    return null;
   }
 
   return (
@@ -85,6 +79,8 @@ function Model({ url, mousePosition }: { url: string; mousePosition: { x: number
 export default function Model3D({ modelPath }: { modelPath: string }) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isClient, setIsClient] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   
   useEffect(() => {
@@ -102,6 +98,15 @@ export default function Model3D({ modelPath }: { modelPath: string }) {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
   
+  useEffect(() => {
+    setIsLoading(true);
+    setHasError(false);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [retryCount]);
+  
   if (!isClient) {
     return (
       <div style={{ 
@@ -114,7 +119,7 @@ export default function Model3D({ modelPath }: { modelPath: string }) {
         color: '#666',
         fontSize: '1rem'
       }}>
-        Loading 3D viewer...
+        loading 3D model...
       </div>
     );
   }
@@ -135,7 +140,10 @@ export default function Model3D({ modelPath }: { modelPath: string }) {
         <div>
           <p>3D model failed to load</p>
           <button 
-            onClick={() => setHasError(false)}
+            onClick={() => {
+              setHasError(false);
+              setRetryCount(prev => prev + 1);
+            }}
             style={{
               marginTop: '1rem',
               padding: '0.5rem 1rem',
@@ -153,25 +161,41 @@ export default function Model3D({ modelPath }: { modelPath: string }) {
   }
   
   return (
-    <div style={{ width: '500px', height: '420px', margin: '1rem auto' }}>
-      <Suspense fallback={
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          height: '100%',
+    <div style={{ width: '500px', height: '420px', margin: '1rem auto', position: 'relative' }}>
+      {isLoading && (
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
           color: '#666',
-          fontSize: '1rem'
+          fontSize: '1rem',
+          zIndex: 10,
+          background: 'rgba(255, 255, 255, 0.9)',
+          padding: '1rem',
+          borderRadius: '8px'
         }}>
           Loading 3D model...
         </div>
-      }>
-        <ErrorBoundary onError={() => setHasError(true)}>
-          <Canvas camera={{ position: [0, 15, 45], fov: 20 }} style={{ background: 'transparent' }}>
+      )}
+      
+      <Suspense fallback={null}>
+        <ErrorBoundary 
+          onError={() => {
+            console.log('3D model error, retrying...');
+            setHasError(true);
+          }}
+          key={retryCount}
+        >
+          <Canvas 
+            camera={{ position: [0, 15, 45], fov: 20 }} 
+            style={{ background: 'transparent' }}
+            onCreated={() => setIsLoading(false)}
+          >
             <ambientLight intensity={0.6} />
             <directionalLight position={[5, 5, 5]} intensity={0.8} />
             <pointLight position={[-5, -5, -5]} intensity={0.3} />
-            <Model key={modelPath} url={modelPath} mousePosition={mousePosition} />
+            <Model key={`${modelPath}-${retryCount}`} url={modelPath} mousePosition={mousePosition} />
           </Canvas>
         </ErrorBoundary>
       </Suspense>
@@ -197,19 +221,8 @@ class ErrorBoundary extends React.Component<
   }
 
   render() {
-    if (this.state.hasError) {
-      return (
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          height: '100%',
-          color: '#666',
-          fontSize: '1rem'
-        }}>
-          Error loading 3D model
-        </div>
-      );
+    if (this.state.hasError) { 
+      return null; 
     }
 
     return this.props.children;

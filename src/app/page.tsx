@@ -4,10 +4,36 @@ import styles from './page.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import { useState, useEffect } from 'react';
 
-const Model3D = dynamic(() => import('../components/Model3D'), { ssr: false });
+const Model3D = dynamic(() => import('../components/Model3D'), { 
+  ssr: false,
+  loading: () => (
+    <div style={{ 
+      width: '500px', 
+      height: '420px', 
+      margin: '1rem auto',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: '#666',
+      fontSize: '1rem'
+    }}>
+      loading 3D model...
+    </div>
+  )
+});
 
 export default function Home() {
+  const [isModelReady, setIsModelReady] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsModelReady(true);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -16,7 +42,7 @@ export default function Home() {
             estella gu
           </h1>
           <p className={styles.intro}>
-            hello! i&apos;m a programmer, artist, and writer from Massachusetts.
+            hello! i&apos;m a high school programmer, artist, and writer from Massachusetts.
           </p>
           <div className={styles.socialLinks}>
             <span className={styles.findMe}>find me:</span>
@@ -44,7 +70,7 @@ export default function Home() {
         </div>
         
         <div className={styles.centerSection}>
-          <Model3D modelPath="/cat.glb" />
+          {isModelReady && <Model3D modelPath="/cat.glb" />}
         </div>
         
         <div className={styles.rightSection}>
