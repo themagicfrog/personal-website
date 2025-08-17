@@ -1,13 +1,6 @@
 import { NextResponse } from 'next/server';
 import Airtable from 'airtable';
 
-interface AirtableAttachment {
-  url: string;
-  filename?: string;
-  type?: string;
-  size?: number;
-}
-
 export async function GET() {
 
   if (!process.env.AIRTABLE_API_KEY || !process.env.AIRTABLE_BASE_ID) {

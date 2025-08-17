@@ -10,7 +10,7 @@ export default function Art() {
   const [artPieces, setArtPieces] = useState<ArtPiece[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [cardSizes, setCardSizes] = useState<Record<string, { wide: boolean; tall: boolean }>>({});
+
 
   useEffect(() => {
     const fetchArt = async () => {

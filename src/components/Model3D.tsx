@@ -59,7 +59,6 @@ function Model({ url, mousePosition }: { url: string; mousePosition: { x: number
 
 export default function Model3D({ modelPath }: { modelPath: string }) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [renderKey, setRenderKey] = useState(0);
   
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -72,14 +71,10 @@ export default function Model3D({ modelPath }: { modelPath: string }) {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
   
-  useEffect(() => {
-    setRenderKey(prev => prev + 1);
-  }, []);
-  
   return (
     <div style={{ width: '500px', height: '420px', margin: '1rem auto' }}>
       <Suspense fallback={<div>Loading...</div>}>
-        <Canvas key={`${modelPath}-${renderKey}`} camera={{ position: [0, 15, 45], fov: 20 }} style={{ background: 'transparent' }}>
+        <Canvas camera={{ position: [0, 15, 45], fov: 20 }} style={{ background: 'transparent' }}>
           <ambientLight intensity={0.6} />
           <directionalLight position={[5, 5, 5]} intensity={0.8} />
           <pointLight position={[-5, -5, -5]} intensity={0.3} />
