@@ -5,12 +5,22 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
+useGLTF.preload('/cat.glb');
+
 function Model({ url, mousePosition }: { url: string; mousePosition: { x: number; y: number } }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isPulsing, setIsPulsing] = useState(false);
   const originalScaleRef = useRef<number>(1);
-  const { scene } = useGLTF(url);
+  const [error, setError] = useState<string | null>(null);
+  
+  let scene: THREE.Group | null = null;
+  try {
+    const gltf = useGLTF(url);
+    scene = gltf.scene;
+  } catch {
+    setError('Failed to load 3D model');
+  }
   
   useEffect(() => {
     if (scene) {
@@ -42,6 +52,21 @@ function Model({ url, mousePosition }: { url: string; mousePosition: { x: number
     }
   });
 
+  if (error || !scene) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        height: '100%',
+        color: '#666',
+        fontSize: '1rem'
+      }}>
+        {error || 'Loading 3D model...'}
+      </div>
+    );
+  }
+
   return (
     <primitive 
       ref={meshRef}
@@ -59,6 +84,12 @@ function Model({ url, mousePosition }: { url: string; mousePosition: { x: number
 
 export default function Model3D({ modelPath }: { modelPath: string }) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isClient, setIsClient] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -71,16 +102,116 @@ export default function Model3D({ modelPath }: { modelPath: string }) {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
   
+  if (!isClient) {
+    return (
+      <div style={{ 
+        width: '500px', 
+        height: '420px', 
+        margin: '1rem auto',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#666',
+        fontSize: '1rem'
+      }}>
+        Loading 3D viewer...
+      </div>
+    );
+  }
+  
+  if (hasError) {
+    return (
+      <div style={{ 
+        width: '500px', 
+        height: '420px', 
+        margin: '1rem auto',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#666',
+        fontSize: '1rem',
+        textAlign: 'center'
+      }}>
+        <div>
+          <p>3D model failed to load</p>
+          <button 
+            onClick={() => setHasError(false)}
+            style={{
+              marginTop: '1rem',
+              padding: '0.5rem 1rem',
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+              background: 'white',
+              cursor: 'pointer'
+            }}
+          >
+            Try again
+          </button>
+        </div>
+      </div>
+    );
+  }
+  
   return (
     <div style={{ width: '500px', height: '420px', margin: '1rem auto' }}>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Canvas camera={{ position: [0, 15, 45], fov: 20 }} style={{ background: 'transparent' }}>
-          <ambientLight intensity={0.6} />
-          <directionalLight position={[5, 5, 5]} intensity={0.8} />
-          <pointLight position={[-5, -5, -5]} intensity={0.3} />
-          <Model key={modelPath} url={modelPath} mousePosition={mousePosition} />
-        </Canvas>
+      <Suspense fallback={
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          height: '100%',
+          color: '#666',
+          fontSize: '1rem'
+        }}>
+          Loading 3D model...
+        </div>
+      }>
+        <ErrorBoundary onError={() => setHasError(true)}>
+          <Canvas camera={{ position: [0, 15, 45], fov: 20 }} style={{ background: 'transparent' }}>
+            <ambientLight intensity={0.6} />
+            <directionalLight position={[5, 5, 5]} intensity={0.8} />
+            <pointLight position={[-5, -5, -5]} intensity={0.3} />
+            <Model key={modelPath} url={modelPath} mousePosition={mousePosition} />
+          </Canvas>
+        </ErrorBoundary>
       </Suspense>
     </div>
   );
+}
+
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode; onError: () => void },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode; onError: () => void }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch() {
+    this.props.onError();
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          height: '100%',
+          color: '#666',
+          fontSize: '1rem'
+        }}>
+          Error loading 3D model
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
 }
