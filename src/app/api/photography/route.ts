@@ -55,8 +55,6 @@ export async function GET() {
       };
     });
 
-    console.log('Processed photos:', photos);
-
     const response = NextResponse.json(photos);
     
     response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');

@@ -20,8 +20,7 @@ export default function Projects() {
           throw new Error('Failed to fetch projects');
         }
         const data = await response.json();
-        console.log('Fetched projects:', data); 
-        setProjects(data);
+        setProjects(data || []);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
@@ -49,7 +48,7 @@ export default function Projects() {
   if (error) {
     return (
       <div className={styles.container}>
-        <div className={styles.content}>
+        <div className={styles.header}>
           <h1 className={styles.title}>projects</h1>
           <p className={styles.error}>Error: {error}</p>
           <Link href="/" className={styles.backLink}>

@@ -21,7 +21,6 @@ export default function Art() {
           throw new Error('Failed to fetch art');
         }
         const data = await response.json();
-        console.log('Fetched art:', data);
         setArtPieces(data || []);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');

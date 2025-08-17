@@ -12,6 +12,7 @@ export default function CollectionPage() {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
   useEffect(() => {
     const fetchPhotos = async () => {
@@ -38,6 +39,19 @@ export default function CollectionPage() {
 
     fetchPhotos();
   }, [collectionName]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && selectedPhoto) {
+        setSelectedPhoto(null);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedPhoto]);
 
   if (loading) {
     return (
@@ -81,6 +95,20 @@ export default function CollectionPage() {
 
   const displayName = photos[0]?.collection || collectionName;
 
+  const handlePhotoClick = (photo: Photo) => {
+    setSelectedPhoto(photo);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedPhoto(null);
+  };
+
+  const handleModalClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      handleCloseModal();
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -93,7 +121,11 @@ export default function CollectionPage() {
       <div className={styles.photosGrid}>
         {photos && photos.length > 0 ? (
           photos.map((photo) => (
-            <div key={photo.id} className={styles.photoCard}>
+            <div 
+              key={photo.id} 
+              className={styles.photoCard}
+              onClick={() => handlePhotoClick(photo)}
+            >
               <div className={styles.imageContainer}>
                 {photo.image ? (
                   <div 
@@ -118,6 +150,33 @@ export default function CollectionPage() {
           </div>
         )}
       </div>
+
+      {/* Modal */}
+      {selectedPhoto && (
+        <div className={styles.modalOverlay} onClick={handleModalClick}>
+          <div className={styles.modalContent}>
+            <button className={styles.closeButton} onClick={handleCloseModal}>
+              ×
+            </button>
+            <div className={styles.modalImageContainer}>
+              {selectedPhoto.image ? (
+                <div 
+                  className={styles.modalImage}
+                  style={{ backgroundImage: `url(${selectedPhoto.image})` }}
+                />
+              ) : (
+                <div className={styles.modalNoImage}>
+                  <p>no image available</p>
+                </div>
+              )}
+            </div>
+            <div className={styles.modalInfo}>
+              <h2 className={styles.modalTitle}>{selectedPhoto.title || 'no title'}</h2>
+              <p className={styles.modalDate}>{selectedPhoto.date || 'no date'}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

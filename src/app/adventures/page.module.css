@@ -87,6 +87,10 @@
   white-space: nowrap;
 }
 
+.imageContainer {
+  margin-bottom: 1.5rem;
+}
+
 .carouselContainer {
   position: relative;
   margin-bottom: 1.5rem;

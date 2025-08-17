@@ -29,9 +29,6 @@ export async function GET() {
 
     const artPieces = records.map(record => {
 
-      console.log('Available fields:', Object.keys(record.fields));
-      
-
       const imageField = record.get('Image');
       let imageUrl = '';
       
@@ -41,7 +38,6 @@ export async function GET() {
 
 
       const rawDate = record.get('Date');
-      console.log('Raw date field:', rawDate, 'Type:', typeof rawDate);
       
       let formattedDate = '';
       if (rawDate) {
@@ -61,8 +57,6 @@ export async function GET() {
         date: formattedDate
       };
     });
-
-    console.log('Processed art pieces:', artPieces);
 
     const response = NextResponse.json(artPieces);
     

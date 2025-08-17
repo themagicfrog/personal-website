@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
-import { Jua } from "next/font/google";
+import { Jua, Margarine } from "next/font/google";
 import "./globals.css";
 
 const jua = Jua({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-jua",
+  display: "swap",
+});
+
+const margarine = Margarine({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-margarine",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -20,9 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${jua.variable} antialiased`}
-      >
+      <body className={`${jua.variable} ${margarine.variable} font-jua antialiased`}>
         {children}
       </body>
     </html>

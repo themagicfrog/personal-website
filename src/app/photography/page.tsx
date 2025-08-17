@@ -50,7 +50,7 @@ export default function Photography() {
     return (
       <div className={styles.container}>
         <div className={styles.header}>
-          <h1 className={styles.title}>photography<br />collections</h1>
+          <h1 className={styles.title}>photography</h1>
           <p className={styles.loading}>loading collections...</p>
           <Link href="/" className={styles.backLink}>
             back to home
@@ -64,7 +64,7 @@ export default function Photography() {
     return (
       <div className={styles.container}>
         <div className={styles.header}>
-          <h1 className={styles.title}>photography<br />collections</h1>
+          <h1 className={styles.title}>photography</h1>
           <p className={styles.error}>Error: {error}</p>
           <Link href="/" className={styles.backLink}>
             back to home
@@ -77,7 +77,7 @@ export default function Photography() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.title}>photography<br />collections</h1>
+        <h1 className={styles.title}>photography</h1>
         <Link href="/" className={styles.backLink}>
           back to home
         </Link>

@@ -55,9 +55,9 @@ export async function GET() {
       };
     });
 
-    console.log('Processed adventures:', adventures);
+    const reversedAdventures = adventures.reverse();
 
-    const response = NextResponse.json(adventures);
+    const response = NextResponse.json(reversedAdventures);
     
     response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
     

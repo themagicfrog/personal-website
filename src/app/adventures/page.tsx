@@ -20,7 +20,6 @@ export default function Adventures() {
           throw new Error('Failed to fetch adventures');
         }
         const data = await response.json();
-        console.log('Fetched adventures:', data);
         setAdventures(data || []);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');

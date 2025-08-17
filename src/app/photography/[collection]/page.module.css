@@ -119,6 +119,10 @@
   --tape-rotation-right: 2deg;
 }
 
+.photoCard {
+  cursor: pointer;
+}
+
 .photoCard:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15), 0 16px 32px rgba(0, 0, 0, 0.15);
@@ -166,18 +170,20 @@
 }
 
 .polaroidTitle {
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #1f2937;
   margin: 0 0 0.5rem 0;
   line-height: 1.3;
+  font-family: var(--font-margarine), cursive;
 }
 
 .polaroidDate {
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: #6b7280;
   margin: 0;
   font-weight: 500;
+  font-family: var(--font-margarine), cursive;
 }
 
 .noPhotos {
@@ -187,6 +193,117 @@
   color: #6b7280;
   font-style: italic;
   font-size: 1.25rem;
+}
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.modalContent {
+  background: white;
+  border-radius: 8px;
+  max-width: 95vw;
+  max-height: 95vh;
+  width: 90vw;
+  height: 90vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  color: #1f2937;
+  border: none;
+  font-size: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  transition: color 0.2s ease;
+  font-weight: bold;
+}
+
+.closeButton:hover {
+  color: #374151;
+}
+
+.modalImageContainer {
+  width: 100%;
+  height: 80vh;
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+  flex: 1;
+}
+
+.modalImage {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f9fafb;
+}
+
+.modalNoImage {
+  width: 100%;
+  height: 100%;
+  background: #f3f4f6;
+  border: 2px dashed #d1d5db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.modalInfo {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.modalTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+  font-family: var(--font-margarine), cursive;
+}
+
+.modalDate {
+  font-size: 1.1rem;
+  color: #6b7280;
+  margin: 0;
+  font-weight: 500;
+  font-family: var(--font-margarine), cursive;
 }
 
 @media (max-width: 768px) {
@@ -206,5 +323,30 @@
   
   .title {
     font-size: 2.5rem;
+  }
+
+  .modalOverlay {
+    padding: 1rem;
+  }
+
+  .modalContent {
+    max-width: 98vw;
+    max-height: 98vh;
+    width: 95vw;
+    height: 95vh;
+  }
+
+  .closeButton {
+    top: 10px;
+    right: 10px;
+    font-size: 28px;
+  }
+
+  .modalTitle {
+    font-size: 1.25rem;
+  }
+
+  .modalDate {
+    font-size: 1rem;
   }
 }

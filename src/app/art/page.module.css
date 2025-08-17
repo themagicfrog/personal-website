@@ -99,57 +99,7 @@
   margin: 0 auto;
 }
 
-.descriptionOverlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 1rem;
-  transform: translateY(100%);
-  transition: transform 0.3s ease;
-  max-height: 200px;
-  overflow-y: auto;
-}
 
-.artCard:hover .descriptionOverlay {
-  transform: translateY(0);
-}
-
-.artCard:hover .imageContainer {
-  margin-bottom: 0;
-}
-
-.overlayContent {
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start;
-}
-
-.dateSection {
-  flex-shrink: 0;
-  min-width: 80px;
-}
-
-.date {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #fbbf24;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.descriptionSection {
-  flex: 1;
-}
-
-.description {
-  margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  color: white;
-}
 
 .noArt {
   grid-column: 1 / -1;
@@ -158,6 +108,49 @@
   color: #6b7280;
   font-style: italic;
   font-size: 1.25rem;
+}
+
+.descriptionOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1rem;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.artCard:hover .descriptionOverlay {
+  transform: translateY(0);
+}
+
+.overlayContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.descriptionSection {
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  color: #171717;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.dateSection {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.date {
+  color: #171717;
+  font-size: 0.75rem;
+  font-style: italic;
 }
 
 @media (max-width: 768px) {
@@ -180,17 +173,5 @@
   
   .artImage {
     max-height: 300px;
-  }
-  
-  .descriptionOverlay {
-    position: static;
-    transform: none;
-    background: rgba(0, 0, 0, 0.9);
-    margin-top: 0.5rem;
-    border-radius: 8px;
-  }
-  
-  .artCard:hover .descriptionOverlay {
-    transform: none;
   }
 } 
