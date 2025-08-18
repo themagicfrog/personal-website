@@ -26,7 +26,7 @@ export default function CollectionPage() {
         const allPhotos: Photo[] = await response.json();
         
         const collectionPhotos = allPhotos.filter(photo => 
-          photo.collection.toLowerCase() === collectionName.toLowerCase()
+          photo.collection && photo.collection.toLowerCase() === collectionName.toLowerCase()
         );
         
         setPhotos(collectionPhotos);
