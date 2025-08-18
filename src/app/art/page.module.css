@@ -54,7 +54,7 @@
   display: flex;
   flex-direction: column;
   width: 400px;
-  height: 500px;
+  height: auto;
   flex-shrink: 0;
 }
 
@@ -68,9 +68,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 0;
-  margin: 0 1rem;
-  transition: margin-bottom 0.3s ease;
+  margin-bottom: 1rem;
   flex: 1;
   min-height: 0;
 }
@@ -84,6 +82,7 @@
   transition: all 0.3s ease;
   display: block;
   margin: 0 auto;
+  text-align: center;
 }
 
 .noImage {
@@ -99,33 +98,8 @@
   margin: 0 auto;
 }
 
-
-
-.noArt {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 3rem;
-  color: #6b7280;
-  font-style: italic;
-  font-size: 1.25rem;
-}
-
-.descriptionOverlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 1rem;
-  transform: translateY(100%);
-  transition: transform 0.3s ease;
-}
-
-.artCard:hover .descriptionOverlay {
-  transform: translateY(0);
-}
-
-.overlayContent {
+.artInfo {
+  padding: 0 1rem 1rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -151,6 +125,15 @@
   color: #171717;
   font-size: 0.75rem;
   font-style: italic;
+}
+
+.noArt {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  color: #6b7280;
+  font-style: italic;
+  font-size: 1.25rem;
 }
 
 @media (max-width: 768px) {

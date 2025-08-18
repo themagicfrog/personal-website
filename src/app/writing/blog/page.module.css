@@ -1,16 +1,15 @@
 .container {
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 2rem;
 }
 
 .content {
   text-align: center;
+  margin-bottom: 3rem;
 }
 
 .title {
-  font-size: 5.75rem;
+  font-size: 3.75rem;
   font-weight: bold;
   color: #1f2937;
   margin-bottom: 1rem;
@@ -25,18 +24,3 @@
 .backLink:hover {
   text-decoration: underline;
 }
-
-.links {
-  margin-bottom: 2rem;
-}
-
-.subLink {
-  color: #1f2937;
-  text-decoration: none;
-  font-size: 2.5rem;
-  margin: 0 1rem;
-}
-
-.subLink:hover {
-  text-decoration: underline;
-} 

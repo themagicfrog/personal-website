@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import styles from './page.module.css';
 import Link from 'next/link';
 import { Photo, PhotoCollection } from '@/types/photography';
+import Breadcrumb from '../../components/Breadcrumb';
 
 export default function Photography() {
   const [collections, setCollections] = useState<PhotoCollection[]>([]);
@@ -49,12 +50,15 @@ export default function Photography() {
   if (loading) {
     return (
       <div className={styles.container}>
+        <Breadcrumb 
+          items={[
+            { label: 'home', href: '/' },
+            { label: 'photography' }
+          ]} 
+        />
         <div className={styles.header}>
           <h1 className={styles.title}>photography</h1>
           <p className={styles.loading}>loading collections...</p>
-          <Link href="/" className={styles.backLink}>
-            back to home
-          </Link>
         </div>
       </div>
     );
@@ -63,12 +67,15 @@ export default function Photography() {
   if (error) {
     return (
       <div className={styles.container}>
+        <Breadcrumb 
+          items={[
+            { label: 'home', href: '/' },
+            { label: 'photography' }
+          ]} 
+        />
         <div className={styles.header}>
           <h1 className={styles.title}>photography</h1>
           <p className={styles.error}>Error: {error}</p>
-          <Link href="/" className={styles.backLink}>
-            back to home
-          </Link>
         </div>
       </div>
     );
@@ -76,11 +83,14 @@ export default function Photography() {
 
   return (
     <div className={styles.container}>
+      <Breadcrumb 
+        items={[
+          { label: 'home', href: '/' },
+          { label: 'photography' }
+        ]} 
+      />
       <div className={styles.header}>
         <h1 className={styles.title}>photography</h1>
-        <Link href="/" className={styles.backLink}>
-          back to home
-        </Link>
       </div>
       
       <div className={styles.collectionsGrid}>

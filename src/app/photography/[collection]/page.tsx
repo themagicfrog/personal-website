@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from './page.module.css';
 import { Photo } from '@/types/photography';
+import Breadcrumb from '../../../components/Breadcrumb';
 
 export default function CollectionPage() {
   const params = useParams();
@@ -56,11 +57,15 @@ export default function CollectionPage() {
   if (loading) {
     return (
       <div className={styles.container}>
+        <Breadcrumb 
+          items={[
+            { label: 'home', href: '/' },
+            { label: 'photography', href: '/photography' },
+            { label: collectionName }
+          ]} 
+        />
         <div className={styles.header}>
           <h1 className={styles.title}>Loading...</h1>
-          <Link href="/photography" className={styles.backLink}>
-            back to collections
-          </Link>
         </div>
       </div>
     );
@@ -69,12 +74,16 @@ export default function CollectionPage() {
   if (error) {
     return (
       <div className={styles.container}>
+        <Breadcrumb 
+          items={[
+            { label: 'home', href: '/' },
+            { label: 'photography', href: '/photography' },
+            { label: collectionName }
+          ]} 
+        />
         <div className={styles.header}>
           <h1 className={styles.title}>Error</h1>
           <p className={styles.error}>Error: {error}</p>
-          <Link href="/photography" className={styles.backLink}>
-            back to collections
-          </Link>
         </div>
       </div>
     );
@@ -83,11 +92,15 @@ export default function CollectionPage() {
   if (photos.length === 0) {
     return (
       <div className={styles.container}>
+        <Breadcrumb 
+          items={[
+            { label: 'home', href: '/' },
+            { label: 'photography', href: '/photography' },
+            { label: collectionName }
+          ]} 
+        />
         <div className={styles.header}>
           <h1 className={styles.title}>collection not found</h1>
-          <Link href="/photography" className={styles.backLink}>
-            back to collections
-          </Link>
         </div>
       </div>
     );
@@ -111,11 +124,15 @@ export default function CollectionPage() {
 
   return (
     <div className={styles.container}>
+      <Breadcrumb 
+        items={[
+          { label: 'home', href: '/' },
+          { label: 'photography', href: '/photography' },
+          { label: displayName }
+        ]} 
+      />
       <div className={styles.header}>
         <h1 className={styles.title}>{displayName}</h1>
-        <Link href="/photography" className={styles.backLink}>
-          back to collections
-        </Link>
       </div>
       
       <div className={styles.photosGrid}>

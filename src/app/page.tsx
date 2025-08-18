@@ -105,11 +105,11 @@ export default function Home() {
           <Link href="/adventures" className={styles.projectsLink}>
             adventures
           </Link>
-          <Link href="/coding" className={styles.projectsLink}>
-            coding
-          </Link>
           <Link href="/writing" className={styles.projectsLink}>
             writing
+          </Link>
+          <Link href="/coding" className={styles.projectsLink}>
+            coding
           </Link>
         </div>
       </div>

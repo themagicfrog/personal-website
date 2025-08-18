@@ -5,6 +5,7 @@ import styles from './page.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArtPiece } from '@/types/art';
+import Breadcrumb from '../../components/Breadcrumb';
 
 export default function Art() {
   const [artPieces, setArtPieces] = useState<ArtPiece[]>([]);
@@ -35,12 +36,15 @@ export default function Art() {
   if (loading) {
     return (
       <div className={styles.container}>
+        <Breadcrumb 
+          items={[
+            { label: 'home', href: '/' },
+            { label: 'art' }
+          ]} 
+        />
         <div className={styles.header}>
           <h1 className={styles.title}>art</h1>
           <p className={styles.loading}>loading art...</p>
-          <Link href="/" className={styles.backLink}>
-            back to home
-          </Link>
         </div>
       </div>
     );
@@ -49,12 +53,15 @@ export default function Art() {
   if (error) {
     return (
       <div className={styles.container}>
+        <Breadcrumb 
+          items={[
+            { label: 'home', href: '/' },
+            { label: 'art' }
+          ]} 
+        />
         <div className={styles.header}>
           <h1 className={styles.title}>art</h1>
           <p className={styles.error}>Error: {error}</p>
-          <Link href="/" className={styles.backLink}>
-            back to home
-          </Link>
         </div>
       </div>
     );
@@ -62,11 +69,14 @@ export default function Art() {
 
   return (
     <div className={styles.container}>
+      <Breadcrumb 
+        items={[
+          { label: 'home', href: '/' },
+          { label: 'art' }
+        ]} 
+      />
       <div className={styles.header}>
         <h1 className={styles.title}>art</h1>
-        <Link href="/" className={styles.backLink}>
-          back to home
-        </Link>
       </div>
       
       <div className={styles.artGrid}>
@@ -93,18 +103,16 @@ export default function Art() {
                   </div>
                 )}
               </div>
-              <div className={styles.descriptionOverlay}>
-                <div className={styles.overlayContent}>
+              <div className={styles.artInfo}>
                 <div className={styles.descriptionSection}>
-                    <p className={styles.description}>{artPiece.description || 'no description'}</p>
-                  </div>
-                  <div className={styles.dateSection}>
-                    <span className={styles.date}>{artPiece.date || 'no date'}</span>
-                  </div>
+                  <p className={styles.description}>{artPiece.description || 'no description'}</p>
                 </div>
-                             </div>
-             </div>
-           ))
+                <div className={styles.dateSection}>
+                  <span className={styles.date}>{artPiece.date || 'no date'}</span>
+                </div>
+              </div>
+            </div>
+          ))
         ) : (
           <div className={styles.noArt}>
             <p>no art found</p>

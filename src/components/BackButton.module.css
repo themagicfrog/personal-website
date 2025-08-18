@@ -1,0 +1,23 @@
+.backButton {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: #1f2937;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  z-index: 1000;
+  transition: background-color 0.2s ease;
+}
+
+.backButton:hover {
+  background-color: #374151;
+  text-decoration: none;
+}

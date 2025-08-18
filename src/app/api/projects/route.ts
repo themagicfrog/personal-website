@@ -27,7 +27,7 @@ export async function GET() {
     }).all();
 
     const projects = records.map(record => {
-      // Handle Airtable image attachments
+      
       const imagesField = record.get('Images');
       let images: string[] = [];
       

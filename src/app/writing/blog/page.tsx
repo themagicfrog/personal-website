@@ -1,20 +1,21 @@
 import styles from './page.module.css';
-import Breadcrumb from '../../components/Breadcrumb';
+import Breadcrumb from '../../../components/Breadcrumb';
 
-export default function Coding() {
+export default function Blog() {
   return (
     <div className={styles.container}>
       <Breadcrumb 
         items={[
           { label: 'home', href: '/' },
-          { label: 'coding' }
+          { label: 'writing', href: '/writing' },
+          { label: 'blog' }
         ]} 
       />
       <div className={styles.content}>
         <h1 className={styles.title}>
-          coding
+          blog
         </h1>
       </div>
     </div>
   );
-} 
+}
