@@ -8,7 +8,7 @@ interface OpeningProps {
 }
 
 export default function Opening({ onComplete }: OpeningProps) {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible] = useState(true);
   const [text, setText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showCursor, setShowCursor] = useState(true);
@@ -90,13 +90,13 @@ export default function Opening({ onComplete }: OpeningProps) {
         {showBoatText && (
           <div className="boatText">
             {visibleLines >= 1 && <p className="fadeInLine">do you see that island off in the distance?</p>}
-            {visibleLines >= 2 && <p className="fadeInLine">it's a legend among locals.</p>}
-            {visibleLines >= 3 && <p className="fadeInLine">they say it's full of treasures big and small.</p>}
+            {visibleLines >= 2 && <p className="fadeInLine">it&apos;s a legend among locals.</p>}
+            {visibleLines >= 3 && <p className="fadeInLine">they say it&apos;s full of treasures big and small.</p>}
             {visibleLines >= 4 && <p className="fadeInLine">...</p>}
             {visibleLines >= 5 && <p className="fadeInLine">and hey, today, YOU have a chance to explore it!</p>}
             {visibleLines >= 6 && (
               <>
-                <p className="fadeInLine">i've got this boat right here, with space for you and me.</p>
+                <p className="fadeInLine">i&apos;ve got this boat right here, with space for you and me.</p>
                 <div className="boatButtonContainer fadeInLine">
                   <button 
                     className="boatButton"
