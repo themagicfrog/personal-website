@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
+import Opening from '../components/opening';
 
 const Model3D = dynamic(() => import('../components/Model3D'), { 
   ssr: false,
@@ -26,13 +27,31 @@ const Model3D = dynamic(() => import('../components/Model3D'), {
 
 export default function Home() {
   const [isModelReady, setIsModelReady] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
 
-  useEffect(() => {
+    useEffect(() => {
+    
+    const hasSeenOpening = sessionStorage.getItem('hasSeenOpening');
+    
+    if (!hasSeenOpening) {
+      setShowWelcome(true);
+      
+      sessionStorage.setItem('hasSeenOpening', 'true');
+    }
+
     const timer = setTimeout(() => {
       setIsModelReady(true);
     }, 500);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleWelcomeComplete = () => {
+    setShowWelcome(false);
+  };
+
+  if (showWelcome) {
+    return <Opening onComplete={handleWelcomeComplete} />;
+  }
 
   return (
     <div className={styles.container}>

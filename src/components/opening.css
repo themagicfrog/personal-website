@@ -1,0 +1,174 @@
+.welcomeScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 1s ease-in-out;
+}
+
+.visible {
+  opacity: 1;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.welcomeContent {
+  text-align: center;
+}
+
+.welcomeText {
+  color: #ffffff;
+  font-size: 3rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.cursor {
+  color: #ffffff;
+  font-weight: 400;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.cursorVisible {
+  opacity: 1;
+}
+
+.cursor:not(.cursorVisible) {
+  opacity: 0;
+}
+
+.boatText {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  text-align: center;
+  max-width: 600px;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: fadeIn 1s ease-in-out;
+  width: 600px;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+.boatText p {
+  margin: 0.5rem 0;
+}
+
+.boatText p:last-of-type {
+  margin-bottom: 2rem;
+}
+
+.boatButtonContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.boatButton {
+  background: transparent;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 400;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  letter-spacing: 0.1em;
+  position: relative;
+  z-index: 2;
+  mix-blend-mode: difference;
+}
+
+.buttonProgress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #ffffff;
+  transition: width 0.05s linear;
+  z-index: 1;
+}
+
+.boatButton:hover {
+  background: #ffffff;
+  color: #000000;
+  transform: translateY(-2px);
+}
+
+.boatButton:active {
+  transform: translateY(0);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fadeInLine {
+  animation: fadeIn 0.8s ease-out;
+}
+
+@media (max-width: 768px) {
+  .welcomeText {
+    font-size: 2rem;
+    top: 15%;
+  }
+  
+  .boatText {
+    font-size: 1.2rem;
+    padding: 0 1rem;
+    top: 25%;
+    max-width: 90%;
+  }
+  
+  .boatButton {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcomeText {
+    font-size: 1.5rem;
+    top: 10%;
+  }
+  
+  .boatText {
+    font-size: 1rem;
+    padding: 0 0.5rem;
+    top: 20%;
+    max-width: 95%;
+  }
+  
+  .boatButton {
+    font-size: 0.9rem;
+    padding: 0.7rem 1.2rem;
+  }
+}

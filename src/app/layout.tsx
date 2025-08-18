@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Jua } from "next/font/google";
 import "./globals.css";
+import { Analytics } from '@vercel/analytics/next';
 
 const jua = Jua({
   weight: "400",
@@ -26,6 +27,7 @@ export default function RootLayout({
       </head>
       <body className={`${jua.variable} font-jua antialiased`}>
         {children}
+        <Analytics />
       </body>
     </html>
   );
