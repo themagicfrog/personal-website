@@ -56,7 +56,7 @@
   width: 400px;
   height: auto;
   flex-shrink: 0;
-}
+} 
 
 .artCard:hover {
   transform: translateY(-4px);
