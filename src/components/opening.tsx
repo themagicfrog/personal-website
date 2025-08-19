@@ -9,108 +9,83 @@ interface OpeningProps {
 
 export default function Opening({ onComplete }: OpeningProps) {
   const [isVisible] = useState(true);
-  const [text, setText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [showCursor, setShowCursor] = useState(true);
-  const [showBoatText, setShowBoatText] = useState(false);
-  const [visibleLines, setVisibleLines] = useState(0);
-  const [buttonProgress, setButtonProgress] = useState(0);
+  const [currentLine, setCurrentLine] = useState(0);
+  const [currentChar, setCurrentChar] = useState(0);
+  const [showSeagullText, setShowSeagullText] = useState(false);
+  const [typingComplete, setTypingComplete] = useState(false);
   
-  const welcomeText = "welcome traveler!";
-  const typingSpeed = 100;
-  const pauseBeforeBoat = 1000;
-  const lineDelay = 800;
-  const buttonFillDuration = 25000; 
+  const seagullText = [
+    "CAW CAW! hello traveler",
+    "see that island over there?",
+    "the locals say there are TREASURES there",
+    "and today, i'm taking you on this boat to the island",
+    "hop on the boat! CAW!"
+  ];
 
   useEffect(() => {
-    if (currentIndex < welcomeText.length) {
-      const timer = setTimeout(() => {
-        setText(welcomeText.slice(0, currentIndex + 1));
-        setCurrentIndex(currentIndex + 1);
-      }, typingSpeed);
-      return () => clearTimeout(timer);
-    } else {
-      const boatTimer = setTimeout(() => {
-        setShowBoatText(true);
-        setShowCursor(false);
-        
-        const lineTimer = setTimeout(() => {
-          setVisibleLines(1);
+    const timer = setTimeout(() => {
+      setShowSeagullText(true);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!showSeagullText) return;
+
+    if (currentLine < seagullText.length) {
+      if (currentChar < seagullText[currentLine].length) {
+        const timer = setTimeout(() => {
+          setCurrentChar(prev => prev + 1);
+        }, 100);
+        return () => clearTimeout(timer);
+      } else {
+        const timer = setTimeout(() => {
+          setCurrentLine(prev => prev + 1);
+          setCurrentChar(0);
         }, 500);
-        return () => clearTimeout(lineTimer);
-      }, pauseBeforeBoat);
-      return () => clearTimeout(boatTimer);
+        return () => clearTimeout(timer);
+      }
+    } else {
+      
+      setTypingComplete(true);
     }
-  }, [currentIndex, welcomeText, pauseBeforeBoat]);
-
-  useEffect(() => {
-    if (!showBoatText) {
-      const cursorTimer = setInterval(() => {
-        setShowCursor(prev => !prev);
-      }, 500);
-      return () => clearInterval(cursorTimer);
-    }
-  }, [showBoatText]);
-
-  useEffect(() => {
-    if (showBoatText && visibleLines < 6) { 
-      const timer = setTimeout(() => {
-        setVisibleLines(prev => prev + 1);
-      }, lineDelay);
-      return () => clearTimeout(timer);
-    }
-  }, [showBoatText, visibleLines, lineDelay]);
-
-  useEffect(() => {
-    if (visibleLines >= 6) {
-      const interval = setInterval(() => {
-        setButtonProgress(prev => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            setTimeout(() => {
-              onComplete();
-            }, 0);
-            return 100;
-          }
-          return prev + (100 / (buttonFillDuration / 50)); 
-        });
-      }, 50);
-      return () => clearInterval(interval);
-    }
-  }, [visibleLines, buttonFillDuration, onComplete]);
+  }, [showSeagullText, currentLine, currentChar, seagullText]);
 
   return (
     <div className={`welcomeScreen ${isVisible ? 'visible' : 'hidden'}`}>
-      <div className="welcomeContent">
-        <h1 className="welcomeText">
-          {text}
-          {!showBoatText && <span className={`cursor ${showCursor ? 'cursorVisible' : ''}`}>|</span>}
-        </h1>
-        
-        {showBoatText && (
-          <div className="boatText">
-            {visibleLines >= 1 && <p className="fadeInLine">do you see that island off in the distance?</p>}
-            {visibleLines >= 2 && <p className="fadeInLine">it&apos;s a legend among locals.</p>}
-            {visibleLines >= 3 && <p className="fadeInLine">they say it&apos;s full of treasures big and small.</p>}
-            {visibleLines >= 4 && <p className="fadeInLine">...</p>}
-            {visibleLines >= 5 && <p className="fadeInLine">and hey, today, YOU have a chance to explore it!</p>}
-            {visibleLines >= 6 && (
-              <>
-                <p className="fadeInLine">i&apos;ve got this boat right here, with space for you and me.</p>
-                <div className="boatButtonContainer fadeInLine">
-                  <button 
-                    className="boatButton"
-                    onClick={() => onComplete()}
-                  >
-                    hop on boat!
-                  </button>
-                  <div 
-                    className="buttonProgress"
-                    style={{ width: `${buttonProgress}%` }}
-                  ></div>
-                </div>
-              </>
-            )}
+      <div className="sky"></div>
+      <div className="ocean">
+        <div className="wave wave1"></div>
+        <div className="wave wave2"></div>
+        <div className="wave wave3"></div>
+      </div>
+      <div className="island">
+        <img src="/island.png" alt="Island on the horizon" />
+      </div>
+      <div 
+        className={`boat ${typingComplete ? 'boatHighlight' : ''}`}
+        onClick={() => onComplete()}
+        style={{ cursor: typingComplete ? 'pointer' : 'default' }}
+      >
+        <img src="/boat.png" alt="Boat on the ocean" />
+      </div>
+      <div className="seagull">
+        <img src="/seagull.png" alt="Seagull flying" />
+        {showSeagullText && (
+          <div className="seagullText">
+            {seagullText.map((line, index) => (
+              <p key={index} className="seagullLine">
+                {index < currentLine 
+                  ? line 
+                  : index === currentLine 
+                    ? line.slice(0, currentChar) 
+                    : ''
+                }
+                {index === currentLine && currentChar < line.length && (
+                  <span className="cursor">|</span>
+                )}
+              </p>
+            ))}
           </div>
         )}
       </div>
