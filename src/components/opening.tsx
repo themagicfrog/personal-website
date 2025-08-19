@@ -15,6 +15,7 @@ export default function Opening({ onComplete }: OpeningProps) {
   const [typingComplete, setTypingComplete] = useState(false);
   const [extraShake, setExtraShake] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [isFadingOut, setIsFadingOut] = useState(false);
   
   const seagullText = [
     "CAW CAW! hello traveler",
@@ -55,14 +56,12 @@ export default function Opening({ onComplete }: OpeningProps) {
     }
   }, [showSeagullText, currentLine, currentChar, seagullText]);
 
-  // Check for special words that trigger extra shaking
   useEffect(() => {
     if (!showSeagullText || currentLine >= seagullText.length) return;
 
     const currentText = seagullText[currentLine].slice(0, currentChar);
     const specialWords = ['CAW', 'TREASURES'];
     
-    // Check if we just finished typing a special word
     for (const word of specialWords) {
       if (currentText.endsWith(word)) {
         setExtraShake(true);
@@ -72,13 +71,31 @@ export default function Opening({ onComplete }: OpeningProps) {
     }
   }, [showSeagullText, currentLine, currentChar, seagullText]);
 
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === ' ') {
+        event.preventDefault();
+        setIsFadingOut(true);
+        setTimeout(() => {
+          onComplete();
+        }, 1000);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [onComplete]);
+
   return (
-    <div className={`welcomeScreen ${isVisible ? 'visible' : 'hidden'}`}>
+    <div className={`welcomeScreen ${isVisible && !isFadingOut ? 'visible' : 'hidden'}`}>
       <div className="sky"></div>
       <div className="ocean">
         <div className="wave wave1"></div>
         <div className="wave wave2"></div>
         <div className="wave wave3"></div>
+        <div className="skipIntroText">
+          SPACE KEY TO SKIP INTRO
+        </div>
       </div>
       <div className="island">
         <img src="/island.png" alt="Island on the horizon" />

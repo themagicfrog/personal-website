@@ -9,6 +9,30 @@
   overflow: hidden;
 }
 
+.skipIntroText {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.2rem;
+  font-weight: 400;
+  text-align: center;
+  z-index: 25;
+  animation: skipIntroPulse 3s ease-in-out infinite;
+  cursor: pointer;
+  user-select: none;
+}
+
+@keyframes skipIntroPulse {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 .visible {
   opacity: 1;
 }
@@ -321,6 +345,11 @@
   .seagullLine {
     font-size: 2rem;
   }
+  
+  .skipIntroText {
+    font-size: 1.1rem;
+    bottom: 12%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -359,5 +388,10 @@
   
   .seagullLine {
     font-size: 1.5rem;
+  }
+  
+  .skipIntroText {
+    font-size: 1rem;
+    bottom: 10%;
   }
 }
