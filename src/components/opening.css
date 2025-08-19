@@ -110,13 +110,95 @@
 .seagull {
   position: absolute;
   bottom: 15%;
-  right: 10%;
+  right: 15%;
   z-index: 15;
 }
 
-.seagull img {
+.woodplank {
+  max-width: 350px;
+  height: auto;
+  position: absolute;
+  bottom: -62px;
+  left: 78%;
+  transform: translateX(-50%);
+  z-index: 14;
+}
+
+.seagullImage {
   max-width: 300px;
   height: auto;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  z-index: 15;
+}
+
+.seagullTalking {
+  animation: seagullTalk 0.3s ease-in-out infinite;
+}
+
+@keyframes seagullTalk {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-1deg) scale(1.02);
+  }
+  50% {
+    transform: rotate(1deg) scale(1.01);
+  }
+  75% {
+    transform: rotate(-0.5deg) scale(1.02);
+  }
+}
+
+.seagullClickShake {
+  animation: seagullClickShake 0.5s ease-in-out;
+}
+
+@keyframes seagullClickShake {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  20% {
+    transform: rotate(-3deg) scale(1.05);
+  }
+  40% {
+    transform: rotate(3deg) scale(1.05);
+  }
+  60% {
+    transform: rotate(-2deg) scale(1.03);
+  }
+  80% {
+    transform: rotate(2deg) scale(1.03);
+  }
+}
+
+.seagullExtraShake {
+  animation: seagullExtraShake 0.8s ease-in-out;
+}
+
+@keyframes seagullExtraShake {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  15% {
+    transform: rotate(-5deg) scale(1.1);
+  }
+  30% {
+    transform: rotate(5deg) scale(1.1);
+  }
+  45% {
+    transform: rotate(-4deg) scale(1.08);
+  }
+  60% {
+    transform: rotate(4deg) scale(1.08);
+  }
+  75% {
+    transform: rotate(-2deg) scale(1.05);
+  }
+  90% {
+    transform: rotate(2deg) scale(1.05);
+  }
 }
 
 .seagullText {
@@ -218,10 +300,16 @@
   
   .seagull {
     bottom: 12%;
-    right: 2%;
+    right: 12%;
   }
   
-  .seagull img {
+  .woodplank {
+    max-width: 250px;
+    bottom: -30px;
+    left: 65%;
+  }
+  
+  .seagullImage {
     max-width: 120px;
   }
   
@@ -251,10 +339,16 @@
   
   .seagull {
     bottom: 10%;
-    right: 1%;
+    right: 10%;
   }
   
-  .seagull img {
+  .woodplank {
+    max-width: 200px;
+    bottom: -35px;
+    left: 68%;
+  }
+  
+  .seagullImage {
     max-width: 100px;
   }
   

@@ -13,13 +13,15 @@ export default function Opening({ onComplete }: OpeningProps) {
   const [currentChar, setCurrentChar] = useState(0);
   const [showSeagullText, setShowSeagullText] = useState(false);
   const [typingComplete, setTypingComplete] = useState(false);
+  const [extraShake, setExtraShake] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   
   const seagullText = [
     "CAW CAW! hello traveler",
     "see that island over there?",
     "the locals say there are TREASURES there",
     "and today, i'm taking you on this boat to the island",
-    "hop on the boat! CAW!"
+    "hop on the boat! (click boat) CAW!"
   ];
 
   useEffect(() => {
@@ -34,20 +36,39 @@ export default function Opening({ onComplete }: OpeningProps) {
 
     if (currentLine < seagullText.length) {
       if (currentChar < seagullText[currentLine].length) {
+        setIsTyping(true);
         const timer = setTimeout(() => {
           setCurrentChar(prev => prev + 1);
         }, 100);
         return () => clearTimeout(timer);
       } else {
+        setIsTyping(false);
         const timer = setTimeout(() => {
           setCurrentLine(prev => prev + 1);
           setCurrentChar(0);
-        }, 500);
+        }, 1500);
         return () => clearTimeout(timer);
       }
     } else {
-      
+      setIsTyping(false);
       setTypingComplete(true);
+    }
+  }, [showSeagullText, currentLine, currentChar, seagullText]);
+
+  // Check for special words that trigger extra shaking
+  useEffect(() => {
+    if (!showSeagullText || currentLine >= seagullText.length) return;
+
+    const currentText = seagullText[currentLine].slice(0, currentChar);
+    const specialWords = ['CAW', 'TREASURES'];
+    
+    // Check if we just finished typing a special word
+    for (const word of specialWords) {
+      if (currentText.endsWith(word)) {
+        setExtraShake(true);
+        setTimeout(() => setExtraShake(false), 800);
+        break;
+      }
     }
   }, [showSeagullText, currentLine, currentChar, seagullText]);
 
@@ -70,7 +91,26 @@ export default function Opening({ onComplete }: OpeningProps) {
         <img src="/boat.png" alt="Boat on the ocean" />
       </div>
       <div className="seagull">
-        <img src="/seagull.png" alt="Seagull flying" />
+        <img 
+          src="/woodplank.png" 
+          alt="Wood plank" 
+          className="woodplank"
+        />
+        <img 
+          src="/seagull.png" 
+          alt="Seagull flying" 
+          className={`seagullImage ${isTyping ? 'seagullTalking' : ''} ${extraShake ? 'seagullExtraShake' : ''}`}
+          onClick={() => {
+            const img = document.querySelector('.seagullImage') as HTMLElement;
+            if (img) {
+              img.classList.add('seagullClickShake');
+              setTimeout(() => {
+                img.classList.remove('seagullClickShake');
+              }, 500);
+            }
+          }}
+          style={{ cursor: 'pointer' }}
+        />
         {showSeagullText && (
           <div className="seagullText">
             {seagullText.map((line, index) => (
