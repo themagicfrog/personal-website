@@ -7,6 +7,8 @@ import Image from 'next/image';
 import { ArtPiece } from '@/types/art';
 import Breadcrumb from '../../components/Breadcrumb';
 
+const ART_DESCRIPTION = "I love making art in many different ways! I enjoy drawing, digital art, ceramics, and mixed media. I like character design a lot. I keep this page updated with my latest random doodles, digital art, and other art I've made.";
+
 export default function Art() {
   const [artPieces, setArtPieces] = useState<ArtPiece[]>([]);
   const [loading, setLoading] = useState(true);
@@ -44,6 +46,7 @@ export default function Art() {
         />
         <div className={styles.header}>
           <h1 className={styles.title}>art</h1>
+          <p className={styles.headerDescription}>{ART_DESCRIPTION}</p>
           <p className={styles.loading}>loading art...</p>
         </div>
       </div>
@@ -61,6 +64,7 @@ export default function Art() {
         />
         <div className={styles.header}>
           <h1 className={styles.title}>art</h1>
+          <p className={styles.headerDescription}>{ART_DESCRIPTION}</p>
           <p className={styles.error}>Error: {error}</p>
         </div>
       </div>
@@ -77,6 +81,7 @@ export default function Art() {
       />
       <div className={styles.header}>
         <h1 className={styles.title}>art</h1>
+        <p className={styles.headerDescription}>{ART_DESCRIPTION}</p>
       </div>
       
       <div className={styles.artGrid}>

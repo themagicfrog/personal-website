@@ -18,11 +18,11 @@ export default function Opening({ onComplete }: OpeningProps) {
   const [isFadingOut, setIsFadingOut] = useState(false);
   
   const seagullText = [
-    "CAW CAW! hello traveler",
+    "CAW CAW! hello traveler!",
     "see that island over there?",
-    "the locals say there are TREASURES there",
-    "and today, i'm taking you on this boat to the island",
-    "hop on the boat! (click boat) CAW!"
+    "the locals say there are TREASURES there,",
+    "and today, i'm taking you on this boat to the island.",
+    "hop on the boat! [CLICK BOAT] CAW!"
   ];
 
   useEffect(() => {

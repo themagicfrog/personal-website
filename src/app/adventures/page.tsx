@@ -7,6 +7,8 @@ import Image from 'next/image';
 import { Adventure } from '@/types/adventure';
 import Breadcrumb from '../../components/Breadcrumb';
 
+const ADVENTURES_DESCRIPTION = "ADVENTURES!! I've gone on many different adventures. Here are some of them:";
+
 export default function Adventures() {
   const [adventures, setAdventures] = useState<Adventure[]>([]);
   const [loading, setLoading] = useState(true);
@@ -43,6 +45,7 @@ export default function Adventures() {
         />
         <div className={styles.header}>
           <h1 className={styles.title}>adventures</h1>
+          <p className={styles.description}>{ADVENTURES_DESCRIPTION}</p>
           <p className={styles.loading}>loading adventures...</p>
         </div>
       </div>
@@ -60,6 +63,7 @@ export default function Adventures() {
         />
         <div className={styles.header}>
           <h1 className={styles.title}>adventures</h1>
+          <p className={styles.description}>{ADVENTURES_DESCRIPTION}</p>
           <p className={styles.error}>Error: {error}</p>
         </div>
       </div>
@@ -76,6 +80,7 @@ export default function Adventures() {
       />
       <div className={styles.header}>
         <h1 className={styles.title}>adventures</h1>
+        <p className={styles.description}>{ADVENTURES_DESCRIPTION}</p>
       </div>
       
       <div className={styles.adventuresGrid}>

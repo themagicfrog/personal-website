@@ -7,6 +7,8 @@ import Image from 'next/image';
 import { Project } from '@/types/project';
 import Breadcrumb from '../../components/Breadcrumb';
 
+const PROJECTS_DESCRIPTION = "I love creating things! I usually always working on some kind of project. I like hand-making things, drawing digital art, coding games and websites, and writing pieces. Usually, my projects are some combination of art, coding, and writing.";
+
 export default function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -43,6 +45,7 @@ export default function Projects() {
         />
         <div className={styles.header}>
           <h1 className={styles.title}>projects</h1>
+          <p className={styles.description}>{PROJECTS_DESCRIPTION}</p>
           <p className={styles.loading}>loading projects...</p>
         </div>
       </div>
@@ -60,6 +63,7 @@ export default function Projects() {
         />
         <div className={styles.header}>
           <h1 className={styles.title}>projects</h1>
+          <p className={styles.description}>{PROJECTS_DESCRIPTION}</p>
           <p className={styles.error}>Error: {error}</p>
         </div>
       </div>
@@ -76,6 +80,7 @@ export default function Projects() {
       />
       <div className={styles.header}>
         <h1 className={styles.title}>projects</h1>
+        <p className={styles.description}>{PROJECTS_DESCRIPTION}</p>
       </div>
       
       <div className={styles.projectsGrid}>

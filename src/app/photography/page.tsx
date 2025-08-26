@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { Photo, PhotoCollection } from '@/types/photography';
 import Breadcrumb from '../../components/Breadcrumb';
 
+const PHOTOGRAPHY_DESCRIPTION = "I love taking photography! In general, I take photos of document where I go and to capture interesting things I see. I like street photography. The photography below is organized into collcetions, based on location and theme. Hope you enjoy!";
+
 export default function Photography() {
   const [collections, setCollections] = useState<PhotoCollection[]>([]);
   const [loading, setLoading] = useState(true);
@@ -58,6 +60,7 @@ export default function Photography() {
         />
         <div className={styles.header}>
           <h1 className={styles.title}>photography</h1>
+          <p className={styles.description}>{PHOTOGRAPHY_DESCRIPTION}</p>
           <p className={styles.loading}>loading collections...</p>
         </div>
       </div>
@@ -75,6 +78,7 @@ export default function Photography() {
         />
         <div className={styles.header}>
           <h1 className={styles.title}>photography</h1>
+          <p className={styles.description}>{PHOTOGRAPHY_DESCRIPTION}</p>
           <p className={styles.error}>Error: {error}</p>
         </div>
       </div>
@@ -91,6 +95,7 @@ export default function Photography() {
       />
       <div className={styles.header}>
         <h1 className={styles.title}>photography</h1>
+        <p className={styles.description}>{PHOTOGRAPHY_DESCRIPTION}</p>
       </div>
       
       <div className={styles.collectionsGrid}>

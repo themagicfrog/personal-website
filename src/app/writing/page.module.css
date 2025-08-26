@@ -16,6 +16,14 @@
   margin-bottom: 1rem;
 }
 
+.description {
+  font-size: 2rem;
+  color: #1f2937;
+  margin-bottom: 2rem;
+  padding: 0 7rem;
+  line-height: 1.6;
+}
+
 .backLink {
   color: #1f2937;
   text-decoration: none;
